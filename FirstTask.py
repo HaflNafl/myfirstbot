@@ -1,8 +1,18 @@
 from aiogram import Bot, Dispatcher, types, executor
 from config import TG_TOKEN
+from Keyboard.keyboards import get_keyboard1,get_keyboard2
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from Keyboard.KeyINline import key_inline
+
+
 
 bot = Bot(token=TG_TOKEN)
 dp = Dispatcher(bot)
+
+
+
+
+
 
 
 async def set_commands(bot: Bot):
@@ -20,11 +30,47 @@ async def set_commands(bot: Bot):
 
 @dp.message_handler(commands='start')
 async def start(message: types.Message):
-    await message.answer('Привет')
+    await message.answer('Привет', reply_markup=get_keyboard1())
+
+
+@dp.message_handler(lambda message: message.text == 'Нажми чтобы увидеть того кто поставит автозачет')
+async def but(message: types.Message):
+    await bot.send_photo(message.chat.id,
+    photo='https://lirp.cdn-website.com/732b1648/dms3rep/multi/opt/kw-point-1920w.jpg', reply_markup=get_keyboard2())
+
+
+
+
+@dp.message_handler(lambda message: message.text == 'Фотка игры')
+async def but(message: types.Message):
+    await bot.send_photo(message.chat.id,
+    photo='https://gamesqa.ru/wp-content/uploads/2015/12/2757437-image_327403_orig.jpg',
+    caption='Это кто угодно, но не ты',
+    reply_markup=key_inline())
+
+
+
+
+
+@dp.message_handler(lambda message: message.text == '>')
+async def but(message: types.Message):
+     await message.answer('здесь могу показать на приятного человека', reply_markup=get_keyboard2())
+
+
+
+@dp.message_handler(lambda message: message.text == '<')
+async def but(message: types.Message):
+     await message.answer('Просто верну к прошлым кнопкам ', reply_markup=get_keyboard1())
+
+
+
+
+
+
 
 @dp.message_handler(commands='help')
 async def help(message: types.Message):
-    await message.reply('Чем тебе блять помочь, совсем тупой?')
+    await message.reply('Чем тебе помочь, совсем тупой?')
 
 @dp.message_handler(commands='check')
 async def check(message: types.Message):
